@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s0="http://www.webserviceX.NET" xmlns:tns="http://www.webserviceX.NET" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.webserviceX.NET" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="BrailleText">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="InText" type="xs:string" />
+            <xs:element minOccurs="1" maxOccurs="1" name="TextFontSize" type="xs:float" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="BrailleTextResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="BrailleTextResult" type="xs:base64Binary" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+    </xs:schema>
+  </types>
+  <message name="BrailleTextSoapIn">
+    <part name="parameters" element="tns:BrailleText" />
+  </message>
+  <message name="BrailleTextSoapOut">
+    <part name="parameters" element="tns:BrailleTextResponse" />
+  </message>
+  <message name="BrailleTextHttpGetIn">
+    <part name="InText" type="s:string" />
+    <part name="TextFontSize" type="s:string" />
+  </message>
+  <message name="BrailleTextHttpGetOut">
+    <part name="Body" element="tns:base64Binary" />
+  </message>
+  <message name="BrailleTextHttpPostIn">
+    <part name="InText" type="s:string" />
+    <part name="TextFontSize" type="s:string" />
+  </message>
+  <message name="BrailleTextHttpPostOut">
+    <part name="Body" element="tns:base64Binary" />
+  </message>
+  <portType name="BrailleSoap">
+    <operation name="BrailleText">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Convert TEXT to Braille</wsdl:documentation>
+      <input message="tns:BrailleTextSoapIn" />
+      <output message="tns:BrailleTextSoapOut" />
+    </operation>
+  </portType>
+  <portType name="BrailleHttpGet">
+    <operation name="BrailleText">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Convert TEXT to Braille</wsdl:documentation>
+      <input message="tns:BrailleTextHttpGetIn" />
+      <output message="tns:BrailleTextHttpGetOut" />
+    </operation>
+  </portType>
+  <portType name="BrailleHttpPost">
+    <operation name="BrailleText">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Convert TEXT to Braille</wsdl:documentation>
+      <input message="tns:BrailleTextHttpPostIn" />
+      <output message="tns:BrailleTextHttpPostOut" />
+    </operation>
+  </portType>
+  <binding name="BrailleSoap" type="tns:BrailleSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="BrailleText">
+      <soap:operation soapAction="http://www.webserviceX.NET/BrailleText" style="document" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="BrailleSoap12" type="tns:BrailleSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="BrailleText">
+      <soap12:operation soapAction="http://www.webserviceX.NET/BrailleText" style="document" />
+      <input>
+        <soap12:body use="literal" />
+      </input>
+      <output>
+        <soap12:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="BrailleHttpGet" type="tns:BrailleHttpGet">
+    <http:binding verb="GET" />
+    <operation name="BrailleText">
+      <http:operation location="/BrailleText" />
+      <input>
+        <http:urlEncoded />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="BrailleHttpPost" type="tns:BrailleHttpPost">
+    <http:binding verb="POST" />
+    <operation name="BrailleText">
+      <http:operation location="/BrailleText" />
+      <input>
+        <mime:content part="" type="application/x-www-form-urlencoded" />
+      </input>
+      <output>
+        <mime:mimeXml part="Body" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Braille">
+    <port name="BrailleSoap" binding="tns:BrailleSoap">
+      <soap:address location="http://www.webservicex.net/braille.asmx" />
+    </port>
+    <port name="BrailleSoap12" binding="tns:BrailleSoap12">
+      <soap12:address location="http://www.webservicex.net/braille.asmx" />
+    </port>
+    <port name="BrailleHttpGet" binding="tns:BrailleHttpGet">
+      <http:address location="http://www.webservicex.net/braille.asmx" />
+    </port>
+    <port name="BrailleHttpPost" binding="tns:BrailleHttpPost">
+      <http:address location="http://www.webservicex.net/braille.asmx" />
+    </port>
+  </service>
+</definitions>
